@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enjoy.common.dao.TimeLineMapper">
+  <resultMap id="BaseResultMap" type="com.enjoy.common.entity.TimeLine">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DATE_ID" jdbcType="VARCHAR" property="dateId" />
+    <result column="EVENT_TITLE" jdbcType="VARCHAR" property="eventTitle" />
+    <result column="EVENT_PICTURE" jdbcType="VARCHAR" property="eventPicture" />
+    <result column="EVENT_DESCRIBLE" jdbcType="VARCHAR" property="eventDescrible" />
+    <result column="EDITABLE" jdbcType="VARCHAR" property="editable" />
+    <result column="ADDNEWABLE" jdbcType="VARCHAR" property="addnewable" />
+    <result column="CREATETIME" jdbcType="VARCHAR" property="createtime" />
+    <result column="UPDATETIME" jdbcType="VARCHAR" property="updatetime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DATE_ID, EVENT_TITLE, EVENT_PICTURE, EVENT_DESCRIBLE, EDITABLE, ADDNEWABLE, CREATETIME, 
+    UPDATETIME, CREATOR
+  </sql>
+  <select id="selectByExample" parameterType="com.enjoy.common.entity.TimeLineExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from timeline_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from timeline_event
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from timeline_event
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.enjoy.common.entity.TimeLineExample">
+    delete from timeline_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.enjoy.common.entity.TimeLine">
+    insert into timeline_event (ID, DATE_ID, EVENT_TITLE, 
+      EVENT_PICTURE, EVENT_DESCRIBLE, EDITABLE, 
+      ADDNEWABLE, CREATETIME, UPDATETIME, 
+      CREATOR)
+    values (#{id,jdbcType=VARCHAR}, #{dateId,jdbcType=VARCHAR}, #{eventTitle,jdbcType=VARCHAR}, 
+      #{eventPicture,jdbcType=VARCHAR}, #{eventDescrible,jdbcType=VARCHAR}, #{editable,jdbcType=VARCHAR}, 
+      #{addnewable,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{updatetime,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.enjoy.common.entity.TimeLine">
+    insert into timeline_event
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="dateId != null">
+        DATE_ID,
+      </if>
+      <if test="eventTitle != null">
+        EVENT_TITLE,
+      </if>
+      <if test="eventPicture != null">
+        EVENT_PICTURE,
+      </if>
+      <if test="eventDescrible != null">
+        EVENT_DESCRIBLE,
+      </if>
+      <if test="editable != null">
+        EDITABLE,
+      </if>
+      <if test="addnewable != null">
+        ADDNEWABLE,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dateId != null">
+        #{dateId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTitle != null">
+        #{eventTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="eventPicture != null">
+        #{eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDescrible != null">
+        #{eventDescrible,jdbcType=VARCHAR},
+      </if>
+      <if test="editable != null">
+        #{editable,jdbcType=VARCHAR},
+      </if>
+      <if test="addnewable != null">
+        #{addnewable,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.enjoy.common.entity.TimeLineExample" resultType="java.lang.Long">
+    select count(*) from timeline_event
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update timeline_event
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateId != null">
+        DATE_ID = #{record.dateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventTitle != null">
+        EVENT_TITLE = #{record.eventTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventPicture != null">
+        EVENT_PICTURE = #{record.eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDescrible != null">
+        EVENT_DESCRIBLE = #{record.eventDescrible,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editable != null">
+        EDITABLE = #{record.editable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addnewable != null">
+        ADDNEWABLE = #{record.addnewable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CREATETIME = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        CREATOR = #{record.creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update timeline_event
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DATE_ID = #{record.dateId,jdbcType=VARCHAR},
+      EVENT_TITLE = #{record.eventTitle,jdbcType=VARCHAR},
+      EVENT_PICTURE = #{record.eventPicture,jdbcType=VARCHAR},
+      EVENT_DESCRIBLE = #{record.eventDescrible,jdbcType=VARCHAR},
+      EDITABLE = #{record.editable,jdbcType=VARCHAR},
+      ADDNEWABLE = #{record.addnewable,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=VARCHAR},
+      CREATOR = #{record.creator,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.enjoy.common.entity.TimeLine">
+    update timeline_event
+    <set>
+      <if test="dateId != null">
+        DATE_ID = #{dateId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTitle != null">
+        EVENT_TITLE = #{eventTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="eventPicture != null">
+        EVENT_PICTURE = #{eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDescrible != null">
+        EVENT_DESCRIBLE = #{eventDescrible,jdbcType=VARCHAR},
+      </if>
+      <if test="editable != null">
+        EDITABLE = #{editable,jdbcType=VARCHAR},
+      </if>
+      <if test="addnewable != null">
+        ADDNEWABLE = #{addnewable,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.enjoy.common.entity.TimeLine">
+    update timeline_event
+    set DATE_ID = #{dateId,jdbcType=VARCHAR},
+      EVENT_TITLE = #{eventTitle,jdbcType=VARCHAR},
+      EVENT_PICTURE = #{eventPicture,jdbcType=VARCHAR},
+      EVENT_DESCRIBLE = #{eventDescrible,jdbcType=VARCHAR},
+      EDITABLE = #{editable,jdbcType=VARCHAR},
+      ADDNEWABLE = #{addnewable,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
